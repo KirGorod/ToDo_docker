@@ -44,6 +44,15 @@ def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
     return crud.create_item(db=db, item=item)
 
 
+@app.put("/items/{item_id}")
+def update_item(item_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)):
+    item_db = db.query(models.Item).filter(models.Item.id == item_id).first()
+    if item_db is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Item with id {item_id} not found.')
+    crud.update_item(db, item_id, item)
+    return {'message': 'Item successfully updated.'}
+
+
 @app.delete("/items/{item_id}")
 def delete_item(item_id: int, db: Session = Depends(get_db)):
     item = db.query(models.Item).filter(models.Item.id == item_id).first()

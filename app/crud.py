@@ -18,6 +18,11 @@ def create_item(db: Session, item: schemas.ItemCreate):
     return db_item
 
 
+def update_item(db: Session, item_id: int, item: schemas.ItemCreate):
+    db.query(models.Item).filter(models.Item.id == item_id).update(item.dict(exclude_unset=True))
+    db.commit()
+
+
 def delete_item(db: Session, item_id: int):
     db.query(models.Item).filter(models.Item.id == item_id).delete()
     db.commit()

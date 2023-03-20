@@ -1,0 +1,7 @@
+*__pycache__*
+*.mypy_cache*
+*.vscode
+*venv
+
+sql_app.db
+.env

@@ -17,7 +17,7 @@ class AdminAuth(AuthenticationBackend):
         username, password = form["username"], form["password"]
 
         # Validate username/password credentials
-        if username != 'admin' and password != os.getenv('ADMIN_PASSWORD'):
+        if username != 'admin' or password != os.getenv('ADMIN_PASSWORD'):
             return False
         # And update session
         request.session.update({"token": "..."})
